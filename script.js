@@ -102,7 +102,7 @@ function main() {
         /*  Set fillStyle for particles before drawing
             to avoid setting for each draw call
         */
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = "#bbf7d0";
 
         for (let i = 0; i < particlesArr.length; i++) {
             particlesArr[i].update();
