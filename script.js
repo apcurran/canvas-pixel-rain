@@ -15,6 +15,7 @@ function main() {
     
     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     let particlesArr = [];
     const totalParticles = 5000;
@@ -40,8 +41,6 @@ function main() {
         mappedImage.push(row);
     }
 
-    console.log(mappedImage);
-
     function calcRelativeBrightness(red, green, blue) {
         return Math.sqrt(
             (red * red) * 0.299 +
@@ -55,10 +54,10 @@ function main() {
             this.x = Math.random() * canvas.width;
             this.y = 0;
             this.speed = 0;
-            this.velocity = Math.random() * 3.5;
+            this.velocity = Math.random() * 0.5;
             this.size = Math.random() * 1.5 + 1;
-            this.position1 = Math.floor(this.y);
-            this.position2 = Math.floor(this.x);
+            this.position1 = Math.floor(this.y); // int
+            this.position2 = Math.floor(this.x); // int
         }
 
         update() {
@@ -66,9 +65,9 @@ function main() {
             this.position2 = Math.floor(this.x);
             this.speed = mappedImage[this.position1][this.position2][0];
 
-            // let movement = (2.5 - this.speed) + this.velocity;
+            let movement = (2.5 - this.speed) + this.velocity;
 
-            this.y += this.velocity;
+            this.y += movement;
 
             if (this.y >= canvas.height) {
                 this.y = 0;
@@ -93,13 +92,14 @@ function main() {
     init();
     
     function animate() {
-        ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 0.05;
         ctx.fillStyle = "rgb(0, 0, 0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 0.2;
 
         for (let i = 0; i < particlesArr.length; i++) {
             particlesArr[i].update();
+            ctx.globalAlpha = particlesArr[i].speed * 0.5;
             particlesArr[i].draw();
         }
 
