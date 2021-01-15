@@ -13,8 +13,11 @@ function main() {
     canvas.width = 500;
     canvas.height = 663;
     
+    // Draw img
     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
+    // Analyze img
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // Clear img
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     let particlesArr = [];
@@ -77,7 +80,6 @@ function main() {
 
         draw() {
             ctx.beginPath();
-            ctx.fillStyle = "#fff";
             ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
             ctx.fill();
         }
@@ -96,6 +98,11 @@ function main() {
         ctx.fillStyle = "rgb(0, 0, 0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 0.2;
+
+        /*  Set fillStyle for particles before drawing
+            to avoid setting for each draw call
+        */
+        ctx.fillStyle = "#fff";
 
         for (let i = 0; i < particlesArr.length; i++) {
             particlesArr[i].update();
