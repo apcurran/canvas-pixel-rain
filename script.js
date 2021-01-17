@@ -8,7 +8,7 @@ myImage.addEventListener("load", main);
 function main() {
     const canvas = document.getElementById("canvas");
     /** @type {CanvasRenderingContext2D} */
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false });
     
     canvas.width = 500;
     canvas.height = 663;
