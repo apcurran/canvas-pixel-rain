@@ -97,7 +97,6 @@ function main() {
         ctx.globalAlpha = 0.05;
         ctx.fillStyle = "rgb(0, 0, 0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.globalAlpha = 0.2;
 
         /*  Set fillStyle for particles before drawing
             to avoid setting for each draw call
