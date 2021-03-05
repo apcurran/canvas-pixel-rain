@@ -34,11 +34,7 @@ function main() {
             const blue = pixels.data[(y * 4 * pixels.width) + (x * 4 + 2)];
             const brightness = calcRelativeBrightness(red, green, blue);
 
-            const cell = [
-                brightness
-            ];
-
-            row.push(cell);
+            row.push(brightness);
         }
 
         mappedImage.push(row);
@@ -66,7 +62,7 @@ function main() {
         update() {
             this.position1 = Math.floor(this.y);
             this.position2 = Math.floor(this.x);
-            this.speed = mappedImage[this.position1][this.position2][0];
+            this.speed = mappedImage[this.position1][this.position2];
 
             let movement = (2.5 - this.speed) + this.velocity;
 
