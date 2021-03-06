@@ -37,7 +37,7 @@ function main() {
             row.push(brightness);
         }
 
-        mappedImage.push(row);
+        mappedImage.push(new Float64Array(row));
     }
 
     function calcRelativeBrightness(red, green, blue) {
