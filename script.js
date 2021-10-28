@@ -6,6 +6,7 @@ myImage.src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAMCAgMCAg
 myImage.addEventListener("load", main);
 
 function main() {
+    /** @type {HTMLCanvasElement}  */
     const canvas = document.getElementById("canvas");
     /** @type {CanvasRenderingContext2D} */
     const ctx = canvas.getContext("2d", { alpha: false });
@@ -20,9 +21,8 @@ function main() {
     // Clear img
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    let particlesArr = [];
     const totalParticles = 5000;
-
+    let particlesArr = [];
     let mappedImage = [];
 
     for (let y = 0; y < canvas.height; y++) {
