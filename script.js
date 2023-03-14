@@ -37,8 +37,11 @@ function main() {
             row.push(brightness);
         }
 
-        mappedImage.push(new Float64Array(row));
+        mappedImage.push(new Float32Array(row));
     }
+
+    console.log(mappedImage);
+    
 
     function calcRelativeBrightness(red, green, blue) {
         return Math.sqrt(
@@ -64,7 +67,7 @@ function main() {
             this.position2 = Math.floor(this.x);
             this.speed = mappedImage[this.position1][this.position2];
 
-            let movement = (2.5 - this.speed) + this.velocity;
+            const movement = (2.5 - this.speed) + this.velocity;
 
             this.y += movement;
 
