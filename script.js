@@ -40,9 +40,12 @@ function main() {
         mappedImage.push(new Float32Array(row));
     }
 
-    console.log(mappedImage);
-    
-
+    /**
+     * @param {number} red 
+     * @param {number} green 
+     * @param {number} blue 
+     * @returns {number}
+     */
     function calcRelativeBrightness(red, green, blue) {
         return Math.sqrt(
             (red * red) * 0.299 +
@@ -51,9 +54,17 @@ function main() {
         ) / 100;
     }
 
+    /**
+     * @param {number} canvasWidth 
+     * @returns {number}
+     */
+    function getRandomIntBasedOnCanvasWidth(canvasWidth) {
+        return Math.floor( Math.random() * canvasWidth );
+    }
+
     class Particle {
         constructor() {
-            this.x = Math.random() * canvas.width;
+            this.x = getRandomIntBasedOnCanvasWidth(canvas.width);
             this.y = 0;
             this.speed = 0;
             this.velocity = Math.random() * 0.5;
@@ -68,12 +79,11 @@ function main() {
             this.speed = mappedImage[this.position1][this.position2];
 
             const movement = (2.5 - this.speed) + this.velocity;
-
             this.y += movement;
 
             if (this.y >= canvas.height) {
                 this.y = 0;
-                this.x = Math.random() * canvas.width;
+                this.x = getRandomIntBasedOnCanvasWidth(canvas.width);
             }
         }
 
