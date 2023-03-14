@@ -10,17 +10,17 @@ function main() {
     const canvas = document.getElementById("canvas");
     /** @type {CanvasRenderingContext2D} */
     const ctx = canvas.getContext("2d", { alpha: false });
-    
+
     canvas.width = 500;
     canvas.height = 663;
-    
+
     // Draw img
     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
     // Analyze img
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // Clear img
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     const totalParticles = 5000;
     let particlesArr = [];
     let mappedImage = [];
@@ -59,49 +59,74 @@ function main() {
      * @returns {number}
      */
     function getRandomIntBasedOnCanvasWidth(canvasWidth) {
-        return Math.floor( Math.random() * canvasWidth );
+        return Math.floor(Math.random() * canvasWidth);
     }
 
-    class Particle {
-        constructor() {
-            this.x = getRandomIntBasedOnCanvasWidth(canvas.width);
-            this.y = 0;
-            this.speed = 0;
-            this.velocity = Math.random() * 0.5;
-            this.size = Math.random() * 1.5 + 1;
-            this.position1 = Math.floor(this.y); // int
-            this.position2 = Math.floor(this.x); // int
+    /**
+     *          0  1  2      3         4     5          6
+     * form -- [x, y, speed, velocity, size, position1, position2]
+     * 
+     * @returns {Float32Array}
+     */
+    function createParticle() {
+        const x = getRandomIntBasedOnCanvasWidth(canvas.width);
+        const y = 0;
+        const speed = 0;
+        const velocity = Math.random() * 0.5;
+        const size = Math.random() * 1.5 + 1;
+        const position1 = Math.floor(y); // int
+        const position2 = Math.floor(x); // int
+
+        return new Float32Array([x, y, speed, velocity, size, position1, position2]);
+    }
+
+    /**
+     * @param {Float32Array} particle
+     * @returns {void}
+     */
+    function updateParticle(particle) {
+        const x = particle[0];
+        const y = particle[1];
+        const speed = particle[2];
+        const velocity = particle[3];
+        const position1 = particle[5];
+        const position2 = particle[6];
+
+        particle[5] = Math.floor(y);
+        particle[6] = Math.floor(x);
+        particle[2] = mappedImage[position1][position2];
+
+        const movement = (2.5 - speed) + velocity;
+        particle[1] += movement;
+
+        if (particle[1] >= canvas.height) {
+            particle[1] = 0;
+            particle[0] = getRandomIntBasedOnCanvasWidth(canvas.width);
         }
+    }
 
-        update() {
-            this.position1 = Math.floor(this.y);
-            this.position2 = Math.floor(this.x);
-            this.speed = mappedImage[this.position1][this.position2];
+    /**
+     * @param {Float32Array} particle
+     * @returns {void}
+     */
+    function drawParticle(particle) {
+        const x = particle[0];
+        const y = particle[1];
+        const size = particle[4];
 
-            const movement = (2.5 - this.speed) + this.velocity;
-            this.y += movement;
-
-            if (this.y >= canvas.height) {
-                this.y = 0;
-                this.x = getRandomIntBasedOnCanvasWidth(canvas.width);
-            }
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-            ctx.fill();
-        }
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, 2 * Math.PI);
+        ctx.fill();
     }
 
     function init() {
         for (let i = 0; i < totalParticles; i++) {
-            particlesArr.push(new Particle);
+            particlesArr.push(createParticle());
         }
     }
-    
+
     init();
-    
+
     function animate() {
         ctx.globalAlpha = 0.05;
         ctx.fillStyle = "rgb(0, 0, 0)";
@@ -113,9 +138,12 @@ function main() {
         ctx.fillStyle = "#bbf7d0";
 
         for (let i = 0; i < particlesArr.length; i++) {
-            particlesArr[i].update();
-            ctx.globalAlpha = particlesArr[i].speed * 0.5;
-            particlesArr[i].draw();
+            const currentParticle = particlesArr[i];
+            const particleSpeed = currentParticle[2];
+            
+            updateParticle(currentParticle);
+            ctx.globalAlpha = particleSpeed * 0.5;
+            drawParticle(currentParticle);
         }
 
         requestAnimationFrame(animate);
