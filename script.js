@@ -55,13 +55,13 @@ function main() {
      * @param {number} canvasWidth 
      * @returns {number}
      */
-    function getRandomIntBasedOnCanvasWidth(canvasWidth) {
+    function generateRandomX(canvasWidth) {
         return Math.floor(Math.random() * canvasWidth);
     }
 
     class Particle {
         constructor() {
-            this.x = getRandomIntBasedOnCanvasWidth(canvas.width);
+            this.x = generateRandomX(canvas.width);
             this.y = 0;
             this.speed = 0;
             this.velocity = Math.random() * 0.5;
@@ -79,7 +79,7 @@ function main() {
 
             if (this.y >= canvas.height) {
                 this.y = 0;
-                this.x = getRandomIntBasedOnCanvasWidth(canvas.width);
+                this.x = generateRandomX(canvas.width);
             }
         }
 
