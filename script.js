@@ -66,14 +66,14 @@ function main() {
             this.speed = 0;
             this.velocity = Math.random() * 0.5;
             this.size = Math.random() * 1.5 + 1;
-            this.position1 = Math.floor(this.y); // int
-            this.position2 = Math.floor(this.x); // int
+            this.positionY = Math.floor(this.y); // int
+            this.positionX = Math.floor(this.x); // int
         }
 
         update() {
-            this.position1 = Math.floor(this.y);
-            this.position2 = Math.floor(this.x);
-            this.speed = mappedImage[this.position1][this.position2];
+            this.positionX = Math.floor(this.x);
+            this.positionY = Math.floor(this.y);
+            this.speed = mappedImage[this.positionY][this.positionX];
             const movement = (2.5 - this.speed) + this.velocity;
             this.y += movement;
 
