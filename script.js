@@ -20,21 +20,17 @@ function main() {
 
     const totalParticles = 5000;
     let particlesArr = [];
-    let mappedImage = [];
+    // build a flat 1D typed array representing all pixels in the image
+    let mappedImage = new Float32Array(canvas.width * canvas.height);
 
     for (let y = 0; y < canvas.height; y++) {
-        let row = [];
-
         for (let x = 0; x < canvas.width; x++) {
             const red = pixels.data[(y * 4 * pixels.width) + (x * 4)];
             const green = pixels.data[(y * 4 * pixels.width) + (x * 4 + 1)];
             const blue = pixels.data[(y * 4 * pixels.width) + (x * 4 + 2)];
             const brightness = calcRelativeBrightness(red, green, blue);
-
-            row.push(brightness);
+            mappedImage[y * canvas.width + x] = brightness;
         }
-
-        mappedImage.push(new Float32Array(row));
     }
 
     /**
@@ -73,7 +69,7 @@ function main() {
         update() {
             this.positionX = Math.floor(this.x);
             this.positionY = Math.floor(this.y);
-            this.speed = mappedImage[this.positionY][this.positionX];
+            this.speed = mappedImage[this.positionY * canvas.width + this.positionX];
             const movement = (2.5 - this.speed) + this.velocity;
             this.y += movement;
 
