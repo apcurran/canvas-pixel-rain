@@ -13,11 +13,9 @@ function main() {
     canvas.width = 500;
     canvas.height = 663;
 
-    // Draw img
+    // Draw and sample image
     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
-    // Analyze img
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    // Clear img
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const totalParticles = 5000;
@@ -76,7 +74,6 @@ function main() {
             this.position1 = Math.floor(this.y);
             this.position2 = Math.floor(this.x);
             this.speed = mappedImage[this.position1][this.position2];
-
             const movement = (2.5 - this.speed) + this.velocity;
             this.y += movement;
 
@@ -103,10 +100,7 @@ function main() {
         ctx.globalAlpha = 0.05;
         ctx.fillStyle = "rgb(0, 0, 0)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        /*  Set fillStyle for particles before drawing
-            to avoid setting for each draw call
-        */
+        // set once per frame
         ctx.fillStyle = "#bbf7d0";
 
         for (let i = 0; i < particlesArr.length; i++) {
