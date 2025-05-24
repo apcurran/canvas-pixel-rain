@@ -10,17 +10,17 @@ function main() {
     const canvas = document.getElementById("canvas");
     /** @type {CanvasRenderingContext2D} */
     const ctx = canvas.getContext("2d", { alpha: false });
-    
+
     canvas.width = 500;
     canvas.height = 663;
-    
+
     // Draw img
     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
     // Analyze img
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // Clear img
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     const totalParticles = 5000;
     let particlesArr = [];
     let mappedImage = [];
@@ -59,7 +59,7 @@ function main() {
      * @returns {number}
      */
     function getRandomIntBasedOnCanvasWidth(canvasWidth) {
-        return Math.floor( Math.random() * canvasWidth );
+        return Math.floor(Math.random() * canvasWidth);
     }
 
     class Particle {
@@ -99,9 +99,7 @@ function main() {
             particlesArr.push(new Particle);
         }
     }
-    
-    init();
-    
+
     function animate() {
         ctx.globalAlpha = 0.05;
         ctx.fillStyle = "rgb(0, 0, 0)";
@@ -121,6 +119,6 @@ function main() {
         requestAnimationFrame(animate);
     }
 
+    init();
     animate();
-
 }
