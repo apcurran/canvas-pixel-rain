@@ -80,6 +80,7 @@ function main() {
         }
 
         draw() {
+            ctx.globalAlpha = this.speed * 0.5;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
             ctx.fill();
@@ -95,14 +96,14 @@ function main() {
     function animate() {
         ctx.globalAlpha = 0.05;
         ctx.fillStyle = "rgb(0, 0, 0)";
+        // clear canvas frame
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        // set once per frame
+        // set particle color once per frame
         ctx.fillStyle = "#bbf7d0";
 
         for (let i = 0; i < particlesArr.length; i++) {
             const particle = particlesArr[i];
             particle.update();
-            ctx.globalAlpha = particle.speed * 0.5;
             particle.draw();
         }
 
