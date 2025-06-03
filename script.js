@@ -100,9 +100,10 @@ function main() {
         ctx.fillStyle = "#bbf7d0";
 
         for (let i = 0; i < particlesArr.length; i++) {
-            particlesArr[i].update();
-            ctx.globalAlpha = particlesArr[i].speed * 0.5;
-            particlesArr[i].draw();
+            const particle = particlesArr[i];
+            particle.update();
+            ctx.globalAlpha = particle.speed * 0.5;
+            particle.draw();
         }
 
         requestAnimationFrame(animate);
