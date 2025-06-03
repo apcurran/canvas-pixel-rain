@@ -49,7 +49,7 @@ function main() {
 
     /**
      * @param {number} canvasWidth 
-     * @returns {number}
+     * @returns {number} x value as int
      */
     function generateRandomX(canvasWidth) {
         return Math.floor(Math.random() * canvasWidth);
